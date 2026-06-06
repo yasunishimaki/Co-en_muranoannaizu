@@ -23,6 +23,7 @@
     <section class="board-stage" aria-label="地図">
       <div class="map-board" id="mapBoard">
         <img src="daisi.png" alt="村の白地図" id="mapImg">
+        <div class="number-layer" id="numberLayer"></div>
         <div class="token-layer" id="tokenLayer"></div>
       </div>
     </section>
@@ -31,7 +32,10 @@
     <aside class="shop-tray" aria-label="村人カード">
       <div class="tray-header">
         <h2>村人カード</h2>
-        <button class="tray-btn" id="resetBtn" type="button">リセット</button>
+        <div style="display:flex;gap:6px;">
+          <button class="tray-btn" id="toggleNumBtn" type="button">番号 ✓</button>
+          <button class="tray-btn" id="resetBtn" type="button">リセット</button>
+        </div>
       </div>
       <div class="selected-status" id="selectedStatus">カードをクリックして選択</div>
       <div class="card-palette" id="cardPalette"></div>
@@ -49,10 +53,13 @@
   <script>
     const mapBoard       = document.getElementById("mapBoard");
     const tokenLayer     = document.getElementById("tokenLayer");
+    const numberLayer    = document.getElementById("numberLayer");
     const cardPalette    = document.getElementById("cardPalette");
     const selectedStatus = document.getElementById("selectedStatus");
     const resetBtn       = document.getElementById("resetBtn");
+    const toggleNumBtn   = document.getElementById("toggleNumBtn");
     const STORAGE_KEY    = "muranoannaizu-board-v1";
+    let showNumbers = true;
 
     let positions  = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
     let selectedId = null;
@@ -167,6 +174,31 @@
       save(); setSelected(null); renderTokens(); renderPalette();
     });
 
+    /* ── Numbers ── */
+    function renderNumbers() {
+      numberLayer.innerHTML = "";
+      if (!showNumbers) return;
+      POSITIONS.forEach(p => {
+        const el = document.createElement("div");
+        el.className = "house-num";
+        el.style.left = p.x + "%";
+        el.style.top  = p.y + "%";
+        el.textContent = p.num <= 20
+          ? ["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩",
+             "⑪","⑫","⑬","⑭","⑮","⑯","⑰","⑱","⑲","⑳"][p.num - 1]
+          : p.num;
+        numberLayer.appendChild(el);
+      });
+    }
+
+    toggleNumBtn.addEventListener("click", () => {
+      showNumbers = !showNumbers;
+      toggleNumBtn.textContent = showNumbers ? "番号 ✓" : "番号";
+      toggleNumBtn.style.opacity = showNumbers ? "1" : "0.5";
+      renderNumbers();
+    });
+
+    renderNumbers();
     renderTokens();
     renderPalette();
   </script>

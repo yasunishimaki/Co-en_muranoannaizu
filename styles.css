@@ -478,6 +478,31 @@ h3 { font-size: 19px; }
   pointer-events: none;
 }
 
+.number-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.house-num {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 5.5%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(155, 35, 53, 0.82);
+  color: #fff;
+  font-size: clamp(9px, 1.4vw, 18px);
+  font-weight: 900;
+  font-family: 'Noto Serif JP', serif;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0,0,0,.35);
+  user-select: none;
+  letter-spacing: 0;
+}
+
 .token-layer {
   position: absolute;
   inset: 0;
