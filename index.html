@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>村の案内図ゲーム</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">オンライン授業用</p>
+      <h1>村の案内図ゲーム</h1>
+    </div>
+    <nav class="top-nav" aria-label="ページ">
+      <a href="view.html">情報を見る</a>
+      <a href="board.html">地図に配置する</a>
+    </nav>
+  </header>
+
+  <main class="content-layout">
+
+    <!-- ルール説明 -->
+    <section class="section-band">
+      <div class="section-heading">
+        <h2>ゲームのルール</h2>
+      </div>
+      <div class="rule-box">
+        <ol>
+          <li>グループで <strong>A〜E の情報セット</strong>を一人ずつ担当します。</li>
+          <li>自分の担当の情報のみを「情報を見る」ページで確認します。</li>
+          <li>グループ内では <strong>声のみ</strong>で情報を出し合い、他の人の情報セットは見ないようにします。</li>
+          <li>村人の家（住居人名）だけでなく、
+            <strong>北・南街道、海、山（鞍馬山）、川、泉、竹林、祠（ほこら）、井戸、３本の桜</strong>
+            の配置も合わせて考えましょう。</li>
+          <li>「地図に配置する」ページで村人コマを白地図の上に配置し、村の案内図を完成させます。</li>
+          <li>各グループで <strong>スピードと正確さ</strong>を競います。</li>
+          <li>どうしても分からない場合は「途中のヒント（村人以外の配置図）」を見てみましょう。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 白地図 -->
+    <section class="section-band">
+      <div class="section-heading">
+        <h2>白地図</h2>
+        <a class="pdf-link" href="daisi.png" target="_blank" rel="noopener">画像を開く</a>
+      </div>
+      <img class="map-preview" src="daisi.png" alt="村の白地図">
+    </section>
+
+    <!-- 村人一覧 -->
+    <section class="section-band">
+      <div class="section-heading">
+        <h2>村人一覧（20人）</h2>
+      </div>
+      <div class="villager-grid" id="villagerGrid"></div>
+    </section>
+
+    <!-- ページ案内 -->
+    <section class="section-band" style="border-bottom:none;">
+      <div class="home-layout" style="width:100%;margin:0;">
+        <div class="home-panel">
+          <h2>情報ページ</h2>
+          <p>担当するヒント（A〜E）を選んで確認できます。途中のヒント図もここから表示できます。</p>
+          <a class="primary-link" href="view.html">情報を見る →</a>
+        </div>
+        <div class="home-panel accent">
+          <h2>配置ページ</h2>
+          <p>白地図の上に村人コマをドラッグ&ドロップして配置します。リセットボタンで最初からやり直せます。</p>
+          <a class="primary-link" href="board.html">地図に配置する →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+    const grid = document.getElementById("villagerGrid");
+    VILLAGERS.forEach(v => {
+      grid.insertAdjacentHTML("beforeend", `
+        <figure class="villager-item">
+          <img src="${v.image}" alt="${v.name}">
+          <figcaption>${v.name}</figcaption>
+        </figure>
+      `);
+    });
+  </script>
+</body>
+</html>
