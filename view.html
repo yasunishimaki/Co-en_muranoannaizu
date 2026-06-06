@@ -9,7 +9,7 @@
 <body>
   <header class="site-header compact">
     <div>
-      <p class="eyebrow">情報確認</p>
+      <p class="eyebrow">◈ 情報確認 ◈</p>
       <h1>村の案内図ゲーム</h1>
     </div>
     <nav class="top-nav" aria-label="ページ">
@@ -25,8 +25,9 @@
       <div class="section-heading">
         <h2>ヒント情報</h2>
       </div>
-      <p style="color:var(--muted);font-size:16px;margin-bottom:16px;">
-        自分の担当ボタンをクリックすると、情報カードが表示されます。他の人の情報は見ないようにしましょう。
+      <p style="color:var(--haiiro);font-size:15px;margin-bottom:18px;line-height:1.9;">
+        自分の担当ボタンをクリックすると、情報カードが表示されます。<br>
+        他の人の情報は見ないようにしましょう。
       </p>
 
       <div class="hint-controls" role="group" aria-label="担当を選ぶ">
@@ -38,30 +39,30 @@
       </div>
 
       <div id="hintArea">
-        <div class="hint-hidden">ヒント A〜E のボタンをクリックすると情報が表示されます</div>
+        <div class="hint-hidden">〜 ヒント A〜E のボタンをクリックすると情報が表示されます 〜</div>
       </div>
     </section>
 
-    <!-- 途中のヒント（村人以外の配置） -->
+    <!-- 途中のヒント -->
     <section class="section-band">
       <div class="section-heading">
         <h2>途中のヒント</h2>
       </div>
-      <p style="color:var(--muted);font-size:16px;margin-bottom:16px;">
+      <p style="color:var(--haiiro);font-size:15px;margin-bottom:16px;line-height:1.9;">
         どうしても分からない場合のみ表示してください。<br>
         村人以外（街道・海・山・川・泉・竹林・祠・井戸・桜）の配置が確認できます。
       </p>
       <div class="middle-hint-wrap">
-        <button class="reveal-btn" id="revealBtn" type="button">ヒント図を表示する</button>
+        <button class="reveal-btn" id="revealBtn" type="button">◎ ヒント図を表示する</button>
         <img id="hintoImg" src="hinto-zu.png" alt="途中のヒント図（村人以外の配置）">
       </div>
     </section>
 
-    <!-- 白地図確認 -->
-    <section class="section-band" style="border-bottom:none;">
+    <!-- 白地図 -->
+    <section class="section-band">
       <div class="section-heading">
         <h2>白地図</h2>
-        <a class="pdf-link" href="daisi.png" target="_blank" rel="noopener">画像を開く</a>
+        <a class="pdf-link" href="daisi.png" target="_blank" rel="noopener">画像を開く ↗</a>
       </div>
       <img class="map-preview" src="daisi.png" alt="村の白地図">
     </section>
@@ -75,14 +76,15 @@
     const hintoImg  = document.getElementById("hintoImg");
     let current = null;
 
+    const rangeMap = { A:"一〜五", B:"六〜十", C:"十一〜十五", D:"十六〜二十", E:"二十一〜二十五" };
+
     document.querySelectorAll(".hint-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.hint;
         if (current === key) {
-          // 同じボタンを再クリック → 閉じる
           current = null;
           btn.classList.remove("active");
-          hintArea.innerHTML = '<div class="hint-hidden">ヒント A〜E のボタンをクリックすると情報が表示されます</div>';
+          hintArea.innerHTML = '<div class="hint-hidden">〜 ヒント A〜E のボタンをクリックすると情報が表示されます 〜</div>';
           return;
         }
         document.querySelectorAll(".hint-btn").forEach(b => b.classList.remove("active"));
@@ -91,7 +93,7 @@
         const items = HINTS[key];
         hintArea.innerHTML = `
           <div class="hint-card">
-            <h3>ヒント ${key}（情報カード ${key === "A" ? "１〜５" : key === "B" ? "６〜１０" : key === "C" ? "１１〜１５" : key === "D" ? "１６〜２０" : "２１〜２５"}）</h3>
+            <h3>◆ ヒント ${key}（情報カード ${rangeMap[key]}）</h3>
             <ul>
               ${items.map(t => `<li>${t}</li>`).join("")}
             </ul>
@@ -102,7 +104,7 @@
     revealBtn.addEventListener("click", () => {
       const showing = hintoImg.style.display === "block";
       hintoImg.style.display = showing ? "none" : "block";
-      revealBtn.textContent = showing ? "ヒント図を表示する" : "ヒント図を隠す";
+      revealBtn.textContent = showing ? "◎ ヒント図を表示する" : "◎ ヒント図を隠す";
     });
   </script>
 </body>
